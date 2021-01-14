@@ -26,7 +26,7 @@ include( CMakeParseArguments )
 
 function( version_from_git )
   # Parse arguments
-  set( options OPTIONAL FAST )
+  set( options OPTIONAL FAST UTC)
   set( oneValueArgs
     GIT_EXECUTABLE
     INCLUDE_HASH
@@ -130,6 +130,11 @@ function( version_from_git )
 
     # Timestamp
     if( DEFINED ARG_TIMESTAMP )
+      if( ARG_UTC )
+        set( ARG_UTC UTC )
+      else()
+        unset( ARG_UTC)
+      endif()
       string( TIMESTAMP timestamp "${ARG_TIMESTAMP}" ${ARG_UTC} )
       list( APPEND metadata "${timestamp}" )
     endif( DEFINED ARG_TIMESTAMP )
